@@ -6,6 +6,7 @@ import {
   copyTemplate,
   getTemplate,
   scanTemplates,
+  type TemplateInfo,
 } from '../utils/templates.js'
 
 export async function createCommand(
@@ -72,7 +73,7 @@ export async function createCommand(
             type: 'list',
             name: 'template',
             message: 'Select a template:',
-            choices: availableTemplates.map(t => ({
+            choices: availableTemplates.map((t: TemplateInfo) => ({
               name: `${t.name} - ${t.description}`,
               value: t.name,
             })),
@@ -93,20 +94,32 @@ export async function createCommand(
       }
     }
 
+    // 确保 templateName 不为 undefined
+    if (!templateName) {
+      console.log(chalk.red('❌ Template name is required!\n'))
+      process.exit(1)
+    }
+
     // 获取模板信息
     const template = await getTemplate(templateName)
     if (!template) {
       console.log(chalk.red(`❌ Template "${templateName}" not found!\n`))
       console.log(chalk.yellow('Available templates:'))
-      availableTemplates.forEach((t) => {
+      availableTemplates.forEach((t: TemplateInfo) => {
         console.log(chalk.gray(`  - ${t.name}`))
       })
       console.log()
       process.exit(1)
     }
 
+    // 确保 projectName 不为 undefined
+    if (!projectName) {
+      console.log(chalk.red('❌ Project name is required!\n'))
+      process.exit(1)
+    }
+
     const targetDir = options?.dir || process.cwd()
-    const projectPath = join(targetDir, projectName!)
+    const projectPath = join(targetDir, projectName)
 
     // 检查目录是否已存在
     if (existsSync(projectPath)) {

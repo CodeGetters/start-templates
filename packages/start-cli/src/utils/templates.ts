@@ -31,10 +31,17 @@ export interface TemplateInfo {
  * 获取模板目录路径
  */
 function getTemplatesDir(): string {
-  // 优先尝试从 __dirname 相对路径查找（适用于构建后的代码）
-  const relativePath = join(__dirname, '../templates')
-  if (existsSync(relativePath)) {
-    return relativePath
+  // 当代码被打包后，import.meta.url 指向 dist/index.js，所以 __dirname 是 dist 目录
+  // 模板在 dist/templates，所以应该在同级目录查找
+  const sameLevelPath = join(__dirname, 'templates')
+  if (existsSync(sameLevelPath)) {
+    return sameLevelPath
+  }
+
+  // 尝试从 __dirname 的父目录查找（适用于未打包的源文件）
+  const parentPath = join(__dirname, '../templates')
+  if (existsSync(parentPath)) {
+    return parentPath
   }
 
   // 尝试从当前工作目录查找（适用于开发环境）
@@ -46,14 +53,20 @@ function getTemplatesDir(): string {
     return devPath
   }
 
-  // 检查构建后的路径
+  // 检查构建后的路径（从项目根目录）
   const buildPath = join(cwd, 'dist/templates')
   if (existsSync(buildPath)) {
     return buildPath
   }
 
-  // 如果都不存在，返回相对路径（让调用方处理错误）
-  return relativePath
+  // 检查 packages/start-cli/dist/templates（从 monorepo 根目录）
+  const monorepoBuildPath = join(cwd, 'packages/start-cli/dist/templates')
+  if (existsSync(monorepoBuildPath)) {
+    return monorepoBuildPath
+  }
+
+  // 如果都不存在，返回同级路径（让调用方处理错误）
+  return sameLevelPath
 }
 
 /**

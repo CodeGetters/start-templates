@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "packageManager": "pnpm@10.17.1",
-  "description": "{{description}}",
+  "description": "A CLI tool for creating projects",
   "author": "",
   "license": "MIT",
   "keywords": [
