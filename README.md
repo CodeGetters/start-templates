@@ -23,26 +23,31 @@ pnpm install
 ## 常用命令
 
 ### 运行所有包的开发命令
+
 ```bash
 pnpm dev
 ```
 
 ### 构建所有包
+
 ```bash
 pnpm build
 ```
 
 ### 运行所有包的测试
+
 ```bash
 pnpm test
 ```
 
 ### 运行所有包的 lint
+
 ```bash
 pnpm lint
 ```
 
 ### 清理所有构建产物和依赖
+
 ```bash
 pnpm clean
 ```
@@ -50,21 +55,25 @@ pnpm clean
 ## 针对特定包的操作
 
 ### 运行特定包的开发命令
+
 ```bash
 pnpm --filter <package-name> dev
 ```
 
 ### 构建特定包
+
 ```bash
 pnpm --filter <package-name> build
 ```
 
 ### 在特定包中安装依赖
+
 ```bash
 pnpm --filter <package-name> add <dependency>
 ```
 
 ### 在根目录添加依赖（所有包共享）
+
 ```bash
 pnpm add -w <dependency>
 ```
