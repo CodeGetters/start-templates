@@ -1,0 +1,32 @@
+{
+  "name": "start-templates",
+  "version": "1.0.0",
+  "description": "Monorepo for start templates",
+  "private": true,
+  "scripts": {
+    "cz": "czg",
+    "prepare": "husky",
+    "lint-staged": "npx lint-staged",
+    "preinstall": "npx only-allow pnpm",
+    "clean": "pnpm --filter \"./packages/*\" clean && rm -rf node_modules"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@10.17.1",
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@types/node": "^24.3.1",
+    "czg": "^1.12.0",
+    "eslint": "^9.35.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.6",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2"
+  }
+}
